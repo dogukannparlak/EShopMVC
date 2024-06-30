@@ -1,0 +1,88 @@
+﻿@model IEnumerable<EShopMVC.Models.Review>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["EditMessage"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["EditMessage"]
+    </div>
+}
+
+@if (TempData["DeleteMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["DeleteMessage"]
+    </div>
+}
+
+
+
+<h1>Reviews</h1>
+<div>
+    <a asp-action="Create" class="btn btn-primary">Create New Review</a>
+</div>
+@foreach (var productGroup in Model.GroupBy(r => r.Product))
+{
+    <h3>@productGroup.Key.Name</h3>
+    <a asp-controller="Products" asp-action="Details" asp-route-id="@productGroup.Key.Id" class="btn btn-sm btn-info mb-2">Product Details</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Rating)
+                </th>
+                <th>
+                    Comment
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in productGroup)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => review.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => review.Content)
+                    </td>
+                    <td class="text-right">
+                        <a asp-action="Edit" asp-route-id="@review.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@review.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+<style>
+    .text-right {
+        text-align: right;
+    }
+
+    .alert-success {
+        background-color: lightgreen;
+    }
+
+    .alert-info {
+        background-color: lightblue;
+    }
+
+    .alert-danger {
+        background-color: lightcoral;
+    }
+</style>

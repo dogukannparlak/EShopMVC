@@ -1,0 +1,63 @@
+﻿@model EShopMVC.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>             
+                <div class="input-group">
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Leave blank to keep current password" id="Password" value="@ViewBag.CurrentPassword" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">Show Password</button>
+                    </div>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("Password");
+            var showButton = document.getElementById("showPasswordButton");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                showButton.innerText = "Hide";
+            } else {
+                passwordField.type = "password";
+                showButton.innerText = "Show";
+            }
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

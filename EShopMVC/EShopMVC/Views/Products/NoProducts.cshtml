@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Category";
+}
+
+<h2>Products in @ViewBag.CategoryName</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" class="text-center">
+                No products available in this category.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Products")" class="btn btn-primary">Back to All Products</a>

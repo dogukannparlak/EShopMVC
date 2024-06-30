@@ -1,0 +1,93 @@
+﻿@model EShopMVC.Models.Review
+
+@{
+    ViewData["Title"] = "Create Review";
+}
+
+<h1>Create Review</h1>
+
+<h4>Review</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <div id="rating-buttons" class="btn-group" role="group">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <button type="button" class="btn btn-secondary" onclick="selectRating(@i)">@i</button>
+                    }
+                </div>
+                <input asp-for="Rating" type="hidden" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function selectRating(rating) {
+            document.querySelector('input[name="Rating"]').value = rating;
+            var buttons = document.querySelectorAll('#rating-buttons button');
+            buttons.forEach(function (button) {
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            });
+            buttons[rating - 1].classList.remove('btn-secondary');
+            buttons[rating - 1].classList.add('btn-primary');
+        }
+    </script>
+}
+
+<style>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    #rating-buttons {
+        margin-top: 10px; 
+    }
+
+    .btn-group {
+        display: flex;
+    }
+
+        .btn-group > .btn {
+            margin-right: 5px; 
+        }
+
+
+</style>
